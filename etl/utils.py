@@ -269,3 +269,23 @@ def get_agau_day(dt):
         return yesterday(dt)
     return dt.strftime('%Y-%m-%d')
 
+def at_night(dt):
+    if dt.hour >= 20 or dt.hour <= 3:
+        return True
+    return False
+
+def in_morning(dt):
+    if dt.hour >= 8 and dt.hour <= 11:
+        return True
+    return False 
+
+def in_afternoon(dt):
+    if dt.hour >= 13 and dt.hour <= 15:
+        return True
+    return False 
+
+def at_bid_time(dt):
+    if dt.hour == 20 or (dt.hour == 13 and dt.minute < 30) or dt.hour == 8:
+        return True
+    return False
+
