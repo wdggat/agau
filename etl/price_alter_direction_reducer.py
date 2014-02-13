@@ -25,13 +25,17 @@ def reducer(lines):
 	        night_begins[agtd.day] = agtd.price
 	    night_ends[agtd.day] = agtd.price
 
-    print '%s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % ('DAY', 'NIGHT^', 'NIGHT$', 'AM^', 'AM$', 'PM^', 'PM$', 'DIRE_SAME')
+    print '%s\t\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % ('DAY', 'NIGHT^', 'NIGHT$', 'NIGHT+', 'AM^', 'AM$', 'AM+', 'PM^', 'PM$', 'PM+', 'DIRE_SAME')
     for day in sorted(days):
         alter_same = '-'
 	if (pm_ends.get(day, 0) - am_begins.get(day, 0)) * (night_ends.get(day, 0) - night_begins.get(day, 0)) > 0 or night_ends.get(day, 0) - night_begins.get(day, 0) == 0: 
 	    alter_same = '+'
-        print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (day, night_begins.get(day, 0), night_ends.get(day, 0), am_begins.get(day, 0), am_ends.get(day, 0), pm_begins.get(day, 0), pm_ends.get(day, 0), alter_same)
+        print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (day, night_begins.get(day, 0), night_ends.get(day, 0), night_ends.get(day, 0) - night_begins.get(day, 0), am_begins.get(day, 0), am_ends.get(day, 0), am_ends.get(day, 0) - am_begins.get(day, 0), pm_begins.get(day, 0), pm_ends.get(day, 0), pm_ends.get(day, 0) - pm_begins.get(day, 0), alter_same)
+
+def print_usage():
+    print 'Usage:'
+    print '\tgrep -e "Ag" ../agau.dat | python price_alter_direction_reducer.py'
 
 if __name__ == '__main__':
     reducer(sys.stdin)
-
+  

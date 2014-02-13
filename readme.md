@@ -59,4 +59,14 @@
 * 上午，下午的涨跌方向是否和当个工作日的晚市一致
     price_alter_direction_reducer.py  => 无关系
 * 上午，下午，晚市的涨跌幅每日各是多少
-* 晚市价格有多大的概率在23:00以后还能回到开盘值
+    grep -e "Ag" ../agau.dat | python price_alter_direction_reducer.py
+    => 三个涨幅方向毫无关系
+* 晚市价格有多大的概率在某刻以后还能回到开盘值
+    grep -e "Ag" ../agau.dat | python backto_open_reducer.py 
+    22:00 => 32/59
+    23:00 => 27/59
+* 既然有一半的概率会在22:00以后重新回到开盘价，是否想一个高概率的收益的交易策略呢
+
+## Strategy ##
+1. 开盘价+-15开，开盘价+-10平
+2. <4100 开盘价买, +15卖, >=4100 -15卖
