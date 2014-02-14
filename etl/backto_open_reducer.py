@@ -29,7 +29,7 @@ def reducer(lines):
             timestamps[agtd.day] = agtd.time
 
     i = 1
-    print '%s\t%s\t\t%s' % ('NO', 'DAY', 'TIMESTAMP')
+    print '%s\t%s\t\t%s\t%s' % ('NO', 'DAY', 'TIMESTAMP', 'DELTA')
     for day in sorted(timestamps.keys()):
         print '%s\t%s\t%s' % (i, day, timestamps.get(day))
 	i += 1
