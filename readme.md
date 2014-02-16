@@ -70,16 +70,37 @@
 15. 想一个策略不必每天交易，只到计算出盈利点时才交易
 16. 做个根据金价查询银价的服务，当有Ag价与理论价不符时，报警通知(短信|易信|weibo).如何确定不是金价虚高呢?
 17. 竞价的涨跌是否与晚市的涨跌一致?
-18. 每天　night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end,5个区间涨跌方向
+18. 每天　last_close -> night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end,6个区间涨跌方向
     grep -e "Ag" ../agau.dat | python stage_alter_direction.py
-    => 5个区间变化方向相互相同的概率 17/60 | 20/60 | 30/60 (变化为0时取方向相同，am_end -> pm_begin间变化太小，不考虑) | 30/60
-    ()
+    => 6个区间变化方向相互的概率(+=-) (25, 0, 36) | (31, 4, 25) | (28, 0, 32) | (17, 15, 30) (变化为0时取方向相同，am_end -> pm_begin间变化太小，不考虑) | (28, 4, 28)
+    => 晚市,上午  　上午,下午    晚市,下午
+      (29, 0, 31), (31, 4, 26), (30, 4, 27)
+19. 6个时间点价格打印.
+    grep -e "Ag" ../agau.dat | python boundary_prices.py
+20. 3个竞价时间和3个交易时段，任意排列组合求变化方向
+    cat stage_alters.txt | python stage_diraction_relations.py
+  =>
+    (NIGHT$-^, --AM^): (31, 4, 25)
+    (--NIGHT^, NIGHT$-^): (25, 0, 35)
+    (--AM^, PM^-$): (24, 3, 33)
+    (NIGHT$-^, AM^-$): (29, 0, 31)
+    (--PM^, PM^-$): (30, 4, 28)
+    (NIGHT$-^, --PM^): (24, 15, 21)
+    (--AM^, --PM^): (25, 15, 20)
+    (NIGHT$-^, PM^-$): (30, 4, 27)
+    (--AM^, AM^-$): (28, 0, 32)
+    (--NIGHT^, --PM^): (20, 15, 25)
+    (--NIGHT^, PM^-$): (31, 3, 26)
+    (--NIGHT^, AM^-$): (32, 0, 28)
+    (AM^-$, --PM^): (17, 15, 30)
+    (--NIGHT^, --AM^): (24, 4, 32)
+    (AM^-$, PM^-$): (32, 4, 26)
 
-## Strategy ##
+## Strategy (Must: >=75%)##
 1. 开盘价买, +15卖 or-15卖
     grep -e "Ag" ../agau.dat | python deal_fixed_reducer.py 15 => 30/59 成交
     grep -e "Ag" ../agau.dat | python deal_fixed_reducer.py -15 => 29/59 成交
     grep -e "Ag" ../agau.dat | python deal_fixed_reducer.py 12 => 35/59 成交
 
-2. 晚市结束时开仓，早市开始时平仓. 看空看涨方向与晚市涨跌方向相反
+2. 晚市开市时开仓，以竞价方向相反变动15委托.
 

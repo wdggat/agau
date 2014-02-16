@@ -265,7 +265,7 @@ def now():
     return datetime.now().strftime('%Y-%m-%d %H:%M:%S');
 
 def get_agau_day(dt):
-    if(dt.hour < 8):
+    if(dt.hour < 20):
         return yesterday(dt)
     return dt.strftime('%Y-%m-%d')
 
@@ -288,4 +288,9 @@ def at_bid_time(dt):
     if dt.hour == 20 or (dt.hour == 13 and dt.minute < 30) or dt.hour == 8:
         return True
     return False
+
+def substract(a, b, default_value=None):
+    if a == 0 or b == 0:
+        return default_value
+    return a - b
 

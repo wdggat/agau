@@ -4,72 +4,30 @@ import sys
 import utils
 from agau import Agau
 
+#NO	DAY		NIGHT^	NIGHT$	AM^	AM$	PM^	PM$
 def reducer(lines):
-    am_begins,am_ends,pm_begins,pm_ends,night_begins,night_ends = {},{},{},{},{},{}
-    days = set()
+    print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % ('NO', 'DAY', '--NIGHT^', 'NIGHT$-^', '--AM^', 'AM^-$', '--PM^', 'PM^-$')
+    last_pm_end,night_bid = 0, ''
     for line in lines:
-        agtd = Agau.get_from_agauline(line)
-	days.add(agtd.day)
-	if utils.at_bid_time(agtd.dt):
-	    continue
-	if utils.in_morning(agtd.dt):
-	    if not am_begins.get(agtd.day):
-	        am_begins[agtd.day] = agtd.price
-	    am_ends[agtd.day] = agtd.price
-	if utils.in_afternoon(agtd.dt):
-	    if not pm_begins.get(agtd.day):
-	        pm_begins[agtd.day] = agtd.price
-	    pm_ends[agtd.day] = agtd.price
-	if utils.at_night(agtd.dt):
-	    if not night_begins.get(agtd.day):
-	        night_begins[agtd.day] = agtd.price
-	    night_ends[agtd.day] = agtd.price
-
-    print '%s\t%s\t\t%s\t%s\t%s\t%s\t%s' % ('NO', 'DAY', 'NIGHT$-^', '--AM^', 'AM^-$', '--PM^', 'PM^-$')
-    i = 0
-    for day in sorted(days):
-        a,b,c,d,e = None,None,None,None,None 
-	i += 1
-	a = night_ends.get(day, 0) - night_begins.get(day, 0)
-	b = am_begins.get(day, 0) - night_ends.get(day, 0)
-	c = am_ends.get(day, 0) - am_begins.get(day, 0)
-	d = pm_begins.get(day, 0) - am_ends.get(day, 0)
-	e = pm_ends.get(day, 0) - pm_begins.get(day, 0)
-#	if night_ends.get(day, 0) - night_begins.get(day, 0) > 0:
-#	    a = '+'
-#	elif night_ends.get(day, 0) - night_begins.get(day, 0) < 0:
-#	    a = '-'
-#	elif night_ends.get(day, 0) - night_begins.get(day, 0) == 0:
-#	    a = '='
-#	if am_begins.get(day, 0) - night_ends.get(day, 0) > 0:
-#	    b = '+'
-#	elif am_begins.get(day, 0) - night_ends.get(day, 0) < 0:
-#	    b = '-'
-#	elif am_begins.get(day, 0) - night_ends.get(day, 0) == 0:
-#	    b = '='
-#	if am_ends.get(day, 0) - am_begins.get(day, 0) > 0:
-#	    c = '+'
-#	elif am_ends.get(day, 0) - am_begins.get(day, 0) < 0:
-#	    c = '-'
-#	elif am_ends.get(day, 0) - am_begins.get(day, 0) == 0:
-#	    c = '='
-#	if pm_begins.get(day, 0) - am_ends.get(day, 0) > 0:
-#	    d = '+'
-#	elif pm_begins.get(day, 0) - am_ends.get(day, 0) < 0:
-#	    d = '-'
-#	elif pm_begins.get(day, 0) - am_ends.get(day, 0) == 0:
-#	    d = '='
-#	if pm_ends.get(day, 0) - pm_begins.get(day, 0) > 0:
-#	    e = '+'
-#	elif pm_ends.get(day, 0) - pm_begins.get(day, 0) < 0:
-#	    e = '-'
-#	elif pm_ends.get(day, 0) - pm_begins.get(day, 0) == 0:
-#	    e = '='
-	print '%s\t%s\t%s\t%s\t%s\t%s\t%s' % (i, day, a,b,c,d,e)
+        items = line.strip().split('\t')
+	if len(items) == 8:
+	    night_begin = float(items[2])
+	    night_end = float(items[3])
+	    am_begin = float(items[4])
+	    am_end = float(items[5])
+	    pm_begin = float(items[6])
+	    pm_end = float(items[7])
+	    if last_pm_end != 0:
+	        night_bid = night_begin - last_pm_end
+	    if night_begin == 0:
+	        night_bid = ''
+	    last_pm_end = pm_end
+	        
+            print '%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s' % (items[0], items[1], night_bid, utils.substract(night_end, night_begin, ''), utils.substract(am_begin, night_end, ''), utils.substract(am_end, am_begin, ''), utils.substract(pm_begin, am_end, ''), utils.substract(pm_end, pm_begin, ''))
 
 def print_usage():
     print 'Usage:'
-    print '\tgrep -e "Ag" ../agau.dat | python stage_alter_direction_reducer.py'
+    print '\tcat boundary_prices.txt | python stage_alter_direction.py'
 
 if __name__ == '__main__':
     reducer(sys.stdin)
