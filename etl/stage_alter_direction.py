@@ -18,7 +18,7 @@ def reducer(lines):
 	    pm_begin = float(items[6])
 	    pm_end = float(items[7])
 	    if last_pm_end != 0:
-	        night_bid = night_begin - last_pm_end
+	        night_bid = utils.substract(night_begin, last_pm_end);
 	    if night_begin == 0:
 	        night_bid = ''
 	    last_pm_end = pm_end

@@ -292,5 +292,5 @@ def at_bid_time(dt):
 def substract(a, b, default_value=None):
     if a == 0 or b == 0:
         return default_value
-    return a - b
+    return int (100 * a - b * 100 ) / 100.0
 
