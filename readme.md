@@ -50,7 +50,8 @@
     extrame_price_reducer.py
 4. 每天价格最大波动多少，众数
     grep -e "Ag" ../agau.dat | python extrame_price_reducer => 基本在20以上
-5. 出重大经济数据后，市场反应时间有几分钟?
+5. 出重大经济数据后，市场反应多大(21:29 -> 21:34间变动多大)?
+    grep -e "Ag" ../agau.dat | python tipping_point_variations.py > tipping_points.ag  => 变化不大，大多在10以内
 6. 第二天的开盘价与第一天的收盘价，一般相差多少? 是否与第一天涨跌方向一致？
     done. => 无关系
 7. 连续跌，一般几天，连续涨，一般又会几天？ 
@@ -98,7 +99,15 @@
     (AM^-$, --PM^): (17, 15, 30)
     (--NIGHT^, --AM^): (24, 4, 32)
     (AM^-$, PM^-$): (32, 4, 26)
-21. 分析竞价方向与晚市变动方向在哪个区间内80%相同，或哪个区间内80%不同.
+21. 分析竞价方向与晚市变动方向在哪个区间内75%相同，或哪个区间内75%不同.
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ cat stage_alters.ag | python stage_threshold_odds.py
+    12	(--AM^, AM^-$): (10, 0, 3)
+    13	(--AM^, AM^-$): (9, 0, 2)
+    14	(--AM^, AM^-$): (9, 0, 2)
+    15	(--AM^, AM^-$): (9, 0, 2)
+    16	(--AM^, AM^-$): (8, 0, 2)
+    28	(--NIGHT^, AM^-$): (8, 0, 2)
+
 22. 接上20,细分区间(0, 10), [10, 20), [20, 30), [30, 40), [40, 50), [50, ..] (数据较少,不宜参考)
 23. 细分晚市各个小时间的变化方向, *貌似是max_min对比更有价值哈*
     grep -e "Ag" ../agau.dat | python hour_alters.py > hour_alters.ag
@@ -112,8 +121,9 @@
 
 2. 晚市开市时开仓，以竞价方向相反变动15委托.    ---- N
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 20  =>  29/64
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 18  =>  33/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 15  =>  37/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 13  =>  43/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  50/64
-    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64   ---Y
 
