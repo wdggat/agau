@@ -103,4 +103,7 @@
     grep -e "Ag" ../agau.dat | python deal_fixed_reducer.py 12 => 35/59 成交
 
 2. 晚市开市时开仓，以竞价方向相反变动15委托.
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 15  =>  35/62
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 13  =>  41/62
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  48/62
 
