@@ -46,18 +46,49 @@
 1. 人民币账户白银与Ag(T+D)的价格变动关系，是否纸白银的价格变动会先于Ag(T+D)的变动
 2. 每周5出经济数据后，到下次出数据之前，价格变化方向是否唯一，即周5 -> 周4这一区间里价格变动是否单调
     NO
-3. 每天的最高价和最低价时间点是否有规律
-    extrame_price_reducer.py
+3. 晚市的最高价和最低价时间点是否有规律
+    grep -e "Ag" ../agau.dat | python extrame_price_reducer.py 0
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ awk '{print $4,$7;}' night_extrames.ag |  sed 's/:[0-9][0-9]:[0-9][0-9]/,/g' | sed 's/,$/)/g' | sed 's/^/(/g' | sort | uniq -c
+      5 (00, 21)
+      1 (01, 01)
+      1 (01, 21)
+      1 (01, 22)
+      1 (02, 00)
+      5 (02, 21)
+      1 (02, 22)
+      1 (02, 23)
+      1 (21, 00)
+      5 (21, 01)
+      5 (21, 02)
+      7 (21, 21)
+      7 (21, 22)
+      2 (21, 23)
+      1 (22, 01)
+      1 (22, 02)
+     10 (22, 21)
+      2 (23, 00)
+      6 (23, 21)
+      2 (23, 22)
+   => 21点多会出现极值
+   liu@hzliuxiaolong-hp:~/workspace/agau/etl$ awk '{print $4; print $7;}' night_extrames.ag |  sed 's/:[0-9][0-9]:[0-9][0-9]//g' | sort | uniq -c
+      9 00
+     10 01
+     14 02
+     61 21
+     23 22
+     13 23
+
 4. 每天价格最大波动多少，众数
     grep -e "Ag" ../agau.dat | python extrame_price_reducer => 基本在20以上
-5. 出重大经济数据后，市场反应时间有几分钟?
+5. 出重大经济数据后，市场反应多大(21:29 -> 21:34间变动多大)?
+    grep -e "Ag" ../agau.dat | python tipping_point_variations.py > tipping_points.ag  => 变化不大，大多在10以内
 6. 第二天的开盘价与第一天的收盘价，一般相差多少? 是否与第一天涨跌方向一致？
     done. => 无关系
 7. 连续跌，一般几天，连续涨，一般又会几天？ 
     done. => 貌似无规律
 8. 若以开盘价+10卖出开仓，-10价委托平仓（如没达到，当天也必须平仓），盈利如何？ 反之呢？
     => 亏，只有一半的概率中途会回到开盘价
-9. 同月份或同季度的价格是否相似？
+9. 同月份或同季度的价格趋势是否相似？
 10. Ag(T+D)一般与哪些价格正相关，与哪些价格负相关？
     正相关： 实物金价，实物银价
     负相关： 美元
@@ -72,7 +103,8 @@
     23:00 => 27/59
 14. 既然有一半的概率会在22:00以后重新回到开盘价，是否想一个高概率的收益的交易策略呢
 15. 想一个策略不必每天交易，只到计算出盈利点时才交易
-16. 做个根据金价查询银价的服务，当有Ag价与理论价不符时，报警通知(短信|易信|weibo).如何确定不是金价虚高呢? m
+16. 做个根据金价查询银价的服务，当有Ag价与理论价不符时，报警通知(短信|易信|weibo).如何确定不是金价虚高呢? 
+17. 写一个报警通知服务,要求实时.
 18. 每天　last_close -> night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end,6个区间涨跌方向
     grep -e "Ag" ../agau.dat | python stage_alter_direction.py
     => 6个区间变化方向相互的概率(+=-) (25, 0, 36) | (31, 4, 25) | (28, 0, 32) | (17, 15, 30) (变化为0时取方向相同，am_end -> pm_begin间变化太小，不考虑) | (28, 4, 28)
@@ -81,28 +113,42 @@
 19. 6个时间点价格打印.
     grep -e "Ag" ../agau.dat | python boundary_prices.py
 20. 3个竞价时间和3个交易时段，任意排列组合求变化方向
-    cat stage_alters.txt | python stage_diraction_relations.py
+    cat stage_alters.ag | python stage_direction_relations.py
   =>
-    (NIGHT$-^, --AM^): (31, 4, 25)
-    (--NIGHT^, NIGHT$-^): (25, 0, 35)
-    (--AM^, PM^-$): (24, 3, 33)
-    (NIGHT$-^, AM^-$): (29, 0, 31)
-    (--PM^, PM^-$): (30, 4, 28)
-    (NIGHT$-^, --PM^): (24, 15, 21)
-    (--AM^, --PM^): (25, 15, 20)
-    (NIGHT$-^, PM^-$): (30, 4, 27)
-    (--AM^, AM^-$): (28, 0, 32)
-    (--NIGHT^, --PM^): (20, 15, 25)
-    (--NIGHT^, PM^-$): (31, 3, 26)
-    (--NIGHT^, AM^-$): (32, 0, 28)
-    (AM^-$, --PM^): (17, 15, 30)
-    (--NIGHT^, --AM^): (24, 4, 32)
-    (AM^-$, PM^-$): (32, 4, 26)
-21. 分析竞价方向与晚市变动方向在哪个区间内80%相同，或哪个区间内80%不同.
-22. 接上20,细分区间(0, 10), [10, 20), [20, 30), [30, 40), [40, 50), [50, ..] (数据较少,不宜参考)
-23. 细分晚市各个小时间的变化方向, *貌似是max_min对比更有价值哈*
+    (NIGHT$-^, --AM^): (32, 4, 28)
+    (--NIGHT^, NIGHT$-^): (27, 0, 37)
+    (--AM^, PM^-$): (26, 3, 35)
+    (NIGHT$-^, AM^-$): (30, 0, 34)
+    (--PM^, PM^-$): (32, 4, 30)
+    (NIGHT$-^, --PM^): (25, 15, 24)
+    (--AM^, --PM^): (27, 15, 22)
+    (NIGHT$-^, PM^-$): (33, 4, 28)
+    (--AM^, AM^-$): (32, 0, 32)
+    (--NIGHT^, --PM^): (23, 15, 26)
+    (--NIGHT^, PM^-$): (34, 3, 27)
+    (--NIGHT^, AM^-$): (35, 0, 29)
+    (AM^-$, --PM^): (19, 15, 32)
+    (--NIGHT^, --AM^): (27, 4, 33)
+    (AM^-$, PM^-$): (34, 4, 28)
+
+21. 分析竞价方向与晚市变动方向在哪个区间内75%相同，或哪个区间内75%不同.
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ cat stage_alters.ag | python stage_threshold_odds.py day
+    12	(--AM^, AM^-$): (10, 0, 3)
+    13	(--AM^, AM^-$): (9, 0, 2)
+    14	(--AM^, AM^-$): (9, 0, 2)
+    15	(--AM^, AM^-$): (9, 0, 2)
+    16	(--AM^, AM^-$): (8, 0, 2)
+    28	(--NIGHT^, AM^-$): (8, 0, 2)
+    => 并且基本都可以盈利
+
+22. 细分晚市各个小时间的变化方向, *貌似是max_min对比更有价值哈*
     grep -e "Ag" ../agau.dat | python hour_alters.py > hour_alters.ag
     grep -e "Ag" ../agau.dat | python hour_extrames.py > hour_extrames.ag 
+    仿上21.
+    变化价值较小，无参考价值
+
+23. 用ag.history, paper.history 求出 ag与美元黄金账户的对应关系,验证回归(无paper.history，use agau.dat)
+    // TODO
 
 ## Strategy (Must: >=80%) ##
 1. 开盘价买, +15卖 or-15卖      ---- N
@@ -112,8 +158,9 @@
 
 2. 晚市开市时开仓，以竞价方向相反变动15委托.    ---- N
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 20  =>  29/64
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 18  =>  33/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 15  =>  37/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 13  =>  43/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  50/64
-    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64   ---Y
 
