@@ -34,6 +34,9 @@ def reducer(lines):
         print '%s\t%s\t%s' % (i, day, timestamps.get(day))
 	i += 1
 
+def print_usage():
+    print 'grep -e "Ag" ../agau.dat | python backto_open_reducer.py'
+
 if __name__ == '__main__':
     reducer(sys.stdin)
 

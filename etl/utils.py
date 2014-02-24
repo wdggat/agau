@@ -269,6 +269,9 @@ def get_agau_day(dt):
         return yesterday(dt)
     return dt.strftime('%Y-%m-%d')
 
+def get_paper_day(dt):
+    return dt.strftime('%Y-%m-%d')
+
 def at_night(dt):
     if dt.hour >= 20 or dt.hour <= 3:
         return True
