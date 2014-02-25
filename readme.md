@@ -164,7 +164,24 @@
     grep -e "美元账户黄金" ../paper.dat | python fixed_durations.py  | awk '{if ($2 >= 8 || $2 <= -8) print $0;}'
     // TODO 2014-01-29 这天的hour_alters.ag有问题，待检查
 
-28. 目前都是求的2个stage的相互关系，能否想出求3个stage的关系呢
+28. 根据[0, 3000), [3000, 4000), [4000, 5000), [5000, 6000), [6000,sys.maxint), 分别求每天大概变化幅度多少?
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ grep -e "Ag" ../history_backup/ag.history | python daily_ranges.py abs
+    [4000, 5000)	0.0146317333333
+    [6000,sys.maxint)	0.00922947619048
+    [5000, 6000)	0.01197648
+    [3000, 4000)	0.0188349]
+
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ grep -e "Ag" ../history_backup/ag.history | python daily_ranges.py
+    [4000, 5000)	-0.000954466666667
+    [6000,sys.maxint)	-0.000486952380952
+    [5000, 6000)	-0.00843024
+    [3000, 4000)	-0.0034775
+    => 无参考价值, 因为历史数据是从5k+跌到4k的，所以此处都是负数
+
+29. 目前都是求的2个stage的相互关系，能否想出求3个stage的关系呢
+
+30. 利用随机算法，模拟退火算法，爬山算法, 遗传算法分别求出ag的定义公式.
+    // TODO
 
 ## Strategy (Must: >=80%) ##
 1. 开盘价买, +15卖 or-15卖      ---- N
