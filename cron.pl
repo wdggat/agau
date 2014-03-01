@@ -21,7 +21,7 @@ my %agau_durations = (
     '5205000' => '6023000',
 );
 my %all_durations = (
-    '1085000' => '6235900',
+    '1070000' => '6040000',
 );
 
 sub formated_now {

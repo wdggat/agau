@@ -5,11 +5,11 @@ import sys
 
 #交易品种 日期 开盘价 最新价 昨结算 最高价 最低价 收盘价 涨跌（元） 涨跌幅 加权平均价 成交量（千克） 成交金额（元） 持仓量 交收方向
 class History():
-    def __init__(self, kind, day, open_price, price_now, closed_price, high, low, closed_today, increase, increase_rate, average, dealed_num, dealed_money, hold, pay_direction):
+    def __init__(self, kind, day, open_price, price_end, closed_price, high, low, closed_today, increase, increase_rate, average, dealed_num, dealed_money, hold, pay_direction):
         self.kind = kind
 	self.day = day
 	self.open_price = float(open_price.replace(',',''))
-	self.price_now = float(price_now.replace(',',''))
+	self.price_end = float(price_end.replace(',',''))
 	self.closed_price = float(closed_price.replace(',',''))
 	self.high = float(high.replace(',',''))
 	self.low = float(low.replace(',',''))
