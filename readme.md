@@ -139,7 +139,7 @@
     15	(--AM^, AM^-$): (9, 0, 2)
     16	(--AM^, AM^-$): (8, 0, 2)
     28	(--NIGHT^, AM^-$): (8, 0, 2)
-    => 并且基本都可以盈利
+    => 除了最后一个,基本都可以盈利
 
 22. 细分晚市各个小时间的变化方向, *貌似是max_min对比更有价值哈*
     grep -e "Ag" ../agau.dat | python hour_alters.py > hour_alters.ag
@@ -148,6 +148,39 @@
     变化价值较小，无参考价值
 
 23. 用ag.history, paper.history 求出 ag与美元黄金账户的对应关系,验证回归(无paper.history，use agau.dat)
+    grep -P 'T\+D' ../agau.dat | python ag_au_mappings.py 
+    => 基本没啥关系，要看每天具体的对应
+
+24. 假如现在价格4300，我委托4310买入开仓，是立即成交吗.
+    // TODO
+
+25. 研究一款可视化工具，把这些数据可视化出来
+    // TODO 延后
+
+26. 研究爆发点，一般持续多久，幅度多大, 中间会出现短暂的回执吗? (爆发点: 2分钟幅度超过10)
+    // TODO
+
+27. 15:30 -> 20:50时，若美元账户黄金超过(8,10,12)后，求Ag 21点变化情况
+    grep -e "美元账户黄金" ../paper.dat | python fixed_durations.py  | awk '{if ($2 >= 8 || $2 <= -8) print $0;}'
+    // TODO 2014-01-29 这天的hour_alters.ag有问题，待检查
+
+28. 根据[0, 3000), [3000, 4000), [4000, 5000), [5000, 6000), [6000,sys.maxint), 分别求每天大概变化幅度多少?
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ grep -e "Ag" ../history_backup/ag.history | python daily_ranges.py abs
+    [4000, 5000)	0.0146317333333
+    [6000,sys.maxint)	0.00922947619048
+    [5000, 6000)	0.01197648
+    [3000, 4000)	0.0188349]
+
+    liu@hzliuxiaolong-hp:~/workspace/agau/etl$ grep -e "Ag" ../history_backup/ag.history | python daily_ranges.py
+    [4000, 5000)	-0.000954466666667
+    [6000,sys.maxint)	-0.000486952380952
+    [5000, 6000)	-0.00843024
+    [3000, 4000)	-0.0034775
+    => 无参考价值, 因为历史数据是从5k+跌到4k的，所以此处都是负数
+
+29. 目前都是求的2个stage的相互关系，能否想出求3个stage的关系呢
+
+30. 利用随机算法，模拟退火算法，爬山算法, 遗传算法分别求出ag的定义公式.
     // TODO
 
 ## Strategy (Must: >=80%) ##
@@ -163,4 +196,7 @@
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 13  =>  43/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  50/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64   ---Y
+
+# Au #
+1, au每次交易只要变化0.41元，即可保本
 

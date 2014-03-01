@@ -269,6 +269,9 @@ def get_agau_day(dt):
         return yesterday(dt)
     return dt.strftime('%Y-%m-%d')
 
+def get_paper_day(dt):
+    return dt.strftime('%Y-%m-%d')
+
 def at_night(dt):
     if dt.hour >= 20 or dt.hour <= 3:
         return True
@@ -294,3 +297,20 @@ def substract(a, b, default_value=None):
         return default_value
     return int (100 * a - b * 100 ) / 100.0
 
+def average(nums):
+    s, n = 0, 0
+    for num in nums:
+        if num == 0: continue
+	s += num 
+	n += 1
+    if n ==0: return 0
+    return s / n
+
+def abs_average(nums):
+    s, n = 0, 0
+    for num in nums:
+        if num == 0: continue
+	s += abs(num)
+	n += 1
+    if n ==0: return 0
+    return s / n
