@@ -18,7 +18,7 @@ def random_reducer(lines):
 	records.add(history_record)
 
     best_cost,best_resolve = sys.maxint, None
-    for i in range(20):
+    for i in range(200):
         cost, resolve = optimizations.randomoptimize(domain, get_best_solution(records))
 #        cost, resolve = optimizations.hill_climb(domain, get_best_solution(records))
         print 'i: %s, cost: %s, resolve: %s, ave_cost: %f' % (i, cost, resolve, cost / len(records))
