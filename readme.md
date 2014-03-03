@@ -183,6 +183,19 @@
 30. 利用随机算法，模拟退火算法，爬山算法, 遗传算法分别求出ag的定义公式.
     // TODO
 
+31. 美元账户黄金和Ag(T+D)是否同涨同跌?
+    // TODO
+
+32. 用ag.history，求连续涨或连续跌的幅度. 用matplotlab画图画出来.
+    // TODO
+
+## ML ##
+1. 把paper.dat, agau.dat的同一时刻的记录对应起来,求出Ag(T+D)的公式
+    // TODO
+
+2. 用ag.history, 计算成交量,last_close,open_close等计算今日价格
+    // TODO
+
 ## Strategy (Must: >=80%) ##
 1. 开盘价买, +15卖 or-15卖      ---- N
     grep -e "Ag" ../agau.dat | python deal_fixed_reducer.py 15 => 30/59 成交
@@ -196,6 +209,8 @@
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 13  =>  43/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  50/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64   ---Y
+
+3. 5长 x价，若跌50，10(x - 50), 若再跌50，10(x-100)
 
 # Au #
 1, au每次交易只要变化0.41元，即可保本
