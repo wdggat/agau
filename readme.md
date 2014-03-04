@@ -181,7 +181,7 @@
 29. 目前都是求的2个stage的相互关系，能否想出求3个stage的关系呢
 
 30. 利用随机算法，模拟退火算法，爬山算法, 遗传算法分别求出ag的定义公式.
-    // TODO
+    ./ML/ag_history_price_predict.py =>　目前求得最好的结果的每日误差也在33
 
 31. 美元账户黄金和Ag(T+D)是否同涨同跌?
     // TODO
@@ -189,12 +189,32 @@
 32. 用ag.history，求连续涨或连续跌的幅度. 用matplotlab画图画出来.
     // TODO
 
+33.观察下每周５的晚市与早市间是否有关系.
+    // TODO
+
+34.晚市有多大概率回到昨日收盘价
+    29 / 72
+
 ## ML ##
 1. 把paper.dat, agau.dat的同一时刻的记录对应起来,求出Ag(T+D)的公式
     // TODO
 
-2. 用ag.history, 计算成交量,last_close,open_close等计算今日价格
+2. how to predict the closed_price of Ag.  //TODO
+   * last_closed,open_price,high,low
+   => 求出预测的涨跌方向　direction_same: 218, length: 262, direction_same/length: 0.832061068702，需用2013-11-30至今的数据检测下
+   * last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
+
+   * last_closed,open_price,21:00,21:30,22:00,22:30,23:00
+
+3. 把中求得的公式，用matplotlab把每日误差图形化出来
+    Done.
+
+4. t, t + 5, t + 10, t + 15, t + 20 -> t + 30
     // TODO
+
+5. 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.
+    // TODO
+
 
 ## Strategy (Must: >=80%) ##
 1. 开盘价买, +15卖 or-15卖      ---- N

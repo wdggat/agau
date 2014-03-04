@@ -22,3 +22,4 @@ class Agau():
     def get_from_agauline(self, line):
         items = line.strip().split('\t')
 	return Agau(items[0], items[1], items[2], items[3], items[4], items[5], items[6], items[7], items[8])
+
