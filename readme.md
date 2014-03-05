@@ -202,7 +202,10 @@
 2. how to predict the closed_price of Ag.  //TODO
    * last_closed,open_price,high,low
    => 求出预测的涨跌方向　direction_same: 218, length: 262, direction_same/length: 0.832061068702，需用2013-11-30至今的数据检测下
+
    * last_closed,open_price,high in 21,low in 21
+   => 无效, best_resolve: [17, -21, 0, 5, 55], best_ave_cost: 170184.057143
+   => delta, best_resolve: [1, 1, -1, -14], best_ave_cost: 1530.900000
 
    * last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
    => 无效, best_cost: 69747958.0, best_resolve: [15, 80, -95, -49, 75, -64, 10, 50, -21, 31], best_ave_cost: 1010839.971014
