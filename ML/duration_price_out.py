@@ -14,8 +14,8 @@ def reducer(lines):
     dt_10 = dt_5 + td
     dt_15 = dt_10 + td
     dt_20 = dt_15 + td
-    dt_30 = dt_20 + td * 2
-    price_0, price_5, price_10, price_15, price_20, price_30 = None, None, None, None, None, None
+    dt_60 = dt_begin + td * 12
+    price_0, price_5, price_10, price_15, price_20, price_60 = None, None, None, None, None, None
     for line in lines:
         ag = Agau.get_from_agauline(line)        
         if utils.is_dt_nearby(ag.dt, dt_begin.hour, dt_begin.minute):
@@ -28,11 +28,11 @@ def reducer(lines):
 	    price_15 = ag.price
         elif utils.is_dt_nearby(ag.dt, dt_20.hour, dt_20.minute):
 	    price_20 = ag.price
-        elif utils.is_dt_nearby(ag.dt, dt_30.hour, dt_30.minute):
-	    price_30 = ag.price
-	    if price_0 and price_5 and price_10 and price_15 and price_20 and price_30:
-	        print '%s\t%s\t%s\t%s\t%s\t%s' % (price_0, price_5, price_10, price_15, price_20, price_30)
-	    price_0, price_5, price_10, price_15, price_20, price_30 = None, None, None, None, None, None
+        elif utils.is_dt_nearby(ag.dt, dt_60.hour, dt_60.minute):
+	    price_60 = ag.price
+	    if price_0 and price_5 and price_10 and price_15 and price_20 and price_60:
+	        print '%s\t%s\t%s\t%s\t%s' % (price_5 - price_0, price_10 - price_5, price_15 - price_10, price_20 - price_15, price_60 - price_20)
+	    price_0, price_5, price_10, price_15, price_20, price_60 = None, None, None, None, None, None
 	else:
 	    continue
 

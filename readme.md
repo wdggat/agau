@@ -202,17 +202,24 @@
 2. how to predict the closed_price of Ag.  //TODO
    * last_closed,open_price,high,low
    => 求出预测的涨跌方向　direction_same: 218, length: 262, direction_same/length: 0.832061068702，需用2013-11-30至今的数据检测下
+   * last_closed,open_price,high in 21,low in 21
+
    * last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
+   => 无效, best_cost: 69747958.0, best_resolve: [15, 80, -95, -49, 75, -64, 10, 50, -21, 31], best_ave_cost: 1010839.971014
 
    * last_closed,open_price,21:00,21:30,22:00,22:30,23:00
+   => 无效, best_resolve: [-18, -47, 63, -2, 0, -25, 30, -30], best_ave_cost: 434808.102941
 
-3. 把中求得的公式，用matplotlab把每日误差图形化出来
+3. 把2中求得的公式，用matplotlab把每日误差图形化出来
     Done.
 
-4. t, t + 5, t + 10, t + 15, t + 20 -> t + 30 (t=21:00)
+4. t, t + 5, t + 10, t + 15, t + 20 -> t + 60 (t=21:00)
+    => failed, best_resolve: [0, 0, 0, 0, 2], best_ave_cost: 157.714286
+
+5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end  ==> next_night_bid
     // TODO
 
-5. 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.
+* 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.
     // TODO
 
 
@@ -234,4 +241,5 @@
 
 # Au #
 1, au每次交易只要变化0.41元，即可保本
-
+2, 使用ML时，最好有差值，而不是用原值，能减少误差
+3. ML是一项苦逼的差事，得不停手工改参数
