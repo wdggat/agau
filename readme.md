@@ -199,30 +199,34 @@
 1. 把paper.dat, agau.dat的同一时刻的记录对应起来,求出Ag(T+D)的公式
     // TODO
 
-2. how to predict the closed_price of Ag.  //TODO
+2. how to predict the closed_price of Ag and the odds that predicted the same direction(>0.8).  //TODO
    * last_closed,open_price,high,low
    => 求出预测的涨跌方向　direction_same: 218, length: 262, direction_same/length: 0.832061068702，需用2013-11-30至今的数据检测下
 
    * last_closed,open_price,high in 21,low in 21
-   => 无效, best_resolve: [17, -21, 0, 5, 55], best_ave_cost: 170184.057143
-   => delta, best_resolve: [1, 1, -1, -14], best_ave_cost: 1530.900000
+   => best_resolve: [-72, 42, 100, 23, 277], best_ave_cost: 1388.089300  --> LENGTH: 72, same: 0.597222222222
+   => delta, best_resolve: [54, 86, 29, -9], best_ave_cost: 1436.544481  --> same: 0.666666666667
 
    * last_closed,open_price,high in 21,low in 21, 22:00 
-   => 无效, best_cost: 12274721.0, best_resolve: [3, -16, -29, 22, 21, 622], best_ave_cost: 175353.157143 
+   => best_resolve: [-78, 64, 76, -26, 59, 191], best_ave_cost: 1393.525493  -->  LENGTH: 72, same: 0.583333333333
+   => delta, best_resolve: [70, 39, -1, 61, -8], best_ave_cost: 1414.773519  -->  SAME: 0.680555555556
 
-   * last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
-   => 无效, best_cost: 69747958.0, best_resolve: [15, 80, -95, -49, 75, -64, 10, 50, -21, 31], best_ave_cost: 1010839.971014
+   * last_closed, open_price, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
+   => [-87, 62, 73, -19, -84, 96, -44, 100, 119], best_ave_cost: 1358.910932  -->  LENGTH: 72, same: 0.527777777778
 
    * last_closed,open_price,21:00,21:30,22:00,22:30,23:00
-   => 无效, best_resolve: [-18, -47, 63, -2, 0, -25, 30, -30], best_ave_cost: 434808.102941
+   => [-67, 31, 37, -74, 88, 80, 202], best_ave_cost: 1185.130899  --> LENGTH: 71, same: 0.661971830986
 
 3. 把2中求得的公式，用matplotlab把每日误差图形化出来
     Done.
 
 4. t, t + 5, t + 10, t + 15, t + 20 -> t + 60 (t=21:00)
-    => failed, best_resolve: [0, 0, 0, 0, 2], best_ave_cost: 157.714286
+    => best_resolve: [53, -97, 14, 27, 99, 166], best_ave_cost: 152.307661  -->  LENGTH: 72, same: 0.666666666667
 
-5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end  ==> next_night_bid, 写好程序把这几个stage取子集排列组合求预测.
+5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end -> next_night_bid, 写好程序把这几个stage取子集排列组合求预测.
+    // TODO
+
+6. 写一个控制程序，自动调节domain中的(-100,100)和costf中的/100和具体的回归方法，分别运算比较出最优值
     // TODO
 
 * 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.
@@ -247,5 +251,4 @@
 
 # Au #
 1, au每次交易只要变化0.41元，即可保本
-2, 使用ML时，最好有差值，而不是用原值，能减少误差
-3. ML是一项苦逼的差事，得不停手工改参数
+2. ML是一项苦逼的差事，得不停手工改参数
