@@ -181,20 +181,53 @@
 29. 目前都是求的2个stage的相互关系，能否想出求3个stage的关系呢
 
 30. 利用随机算法，模拟退火算法，爬山算法, 遗传算法分别求出ag的定义公式.
-    // TODO
+    ./ML/ag_history_price_predict.py =>　目前求得最好的结果的每日误差也在33
 
 31. 美元账户黄金和Ag(T+D)是否同涨同跌?
-    // TODO
+    不一定，这周就是黄金涨了，Ag跌了
 
 32. 用ag.history，求连续涨或连续跌的幅度. 用matplotlab画图画出来.
     // TODO
+
+33.观察下每周５的晚市与早市间是否有关系.
+    // TODO
+
+34.晚市有多大概率回到昨日收盘价
+    29 / 72
 
 ## ML ##
 1. 把paper.dat, agau.dat的同一时刻的记录对应起来,求出Ag(T+D)的公式
     // TODO
 
-2. 用ag.history, 计算成交量,last_close,open_close等计算今日价格
+2. how to predict the closed_price of Ag.  //TODO
+   * last_closed,open_price,high,low
+   => 求出预测的涨跌方向　direction_same: 218, length: 262, direction_same/length: 0.832061068702，需用2013-11-30至今的数据检测下
+
+   * last_closed,open_price,high in 21,low in 21
+   => 无效, best_resolve: [17, -21, 0, 5, 55], best_ave_cost: 170184.057143
+   => delta, best_resolve: [1, 1, -1, -14], best_ave_cost: 1530.900000
+
+   * last_closed,open_price,high in 21,low in 21, 22:00 
+   => 无效, best_cost: 12274721.0, best_resolve: [3, -16, -29, 22, 21, 622], best_ave_cost: 175353.157143 
+
+   * last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
+   => 无效, best_cost: 69747958.0, best_resolve: [15, 80, -95, -49, 75, -64, 10, 50, -21, 31], best_ave_cost: 1010839.971014
+
+   * last_closed,open_price,21:00,21:30,22:00,22:30,23:00
+   => 无效, best_resolve: [-18, -47, 63, -2, 0, -25, 30, -30], best_ave_cost: 434808.102941
+
+3. 把2中求得的公式，用matplotlab把每日误差图形化出来
+    Done.
+
+4. t, t + 5, t + 10, t + 15, t + 20 -> t + 60 (t=21:00)
+    => failed, best_resolve: [0, 0, 0, 0, 2], best_ave_cost: 157.714286
+
+5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end  ==> next_night_bid, 写好程序把这几个stage取子集排列组合求预测.
     // TODO
+
+* 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.
+    // TODO
+
 
 ## Strategy (Must: >=80%) ##
 1. 开盘价买, +15卖 or-15卖      ---- N
@@ -214,4 +247,5 @@
 
 # Au #
 1, au每次交易只要变化0.41元，即可保本
-
+2, 使用ML时，最好有差值，而不是用原值，能减少误差
+3. ML是一项苦逼的差事，得不停手工改参数

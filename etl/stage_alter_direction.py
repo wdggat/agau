@@ -27,7 +27,7 @@ def reducer(lines):
 
 def print_usage():
     print 'Usage:'
-    print '\tcat boundary_prices.txt | python stage_alter_direction.py'
+    print '\tcat boundary_prices.ag | python stage_alter_direction.py'
 
 if __name__ == '__main__':
     reducer(sys.stdin)

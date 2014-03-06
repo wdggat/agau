@@ -314,3 +314,15 @@ def abs_average(nums):
 	n += 1
     if n ==0: return 0
     return s / n
+
+def is_dt_nearby(dt, hour, minute):
+    td = timedelta(minutes=1)
+    dt_before = dt - td
+    dt_after = dt + td
+    minute_before = (dt_before.hour, dt_before.minute)
+    minute_now = (dt.hour, dt.minute)
+    minute_after = (dt_after.hour, dt_after.minute)
+    if (hour, minute) in (minute_before, minute_now, minute_after):
+        return True
+    return False
+

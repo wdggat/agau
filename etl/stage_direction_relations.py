@@ -25,7 +25,7 @@ def reducer(lines):
         print '(%s, %s): (%s, %s, %s)' % (titles[i], titles[j], same.get((i,j), 0), zero.get((i,j), 0), diff.get((i,j), 0))
 
 def print_usage():
-    print 'cat stage_alters.txt | python stage_diraction_relations.py'
+    print 'cat stage_alters.ag | python stage_diraction_relations.py'
 
 if __name__ == '__main__':
     reducer(sys.stdin)

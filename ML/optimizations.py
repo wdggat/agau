@@ -62,3 +62,33 @@ def annealing(domain, costf, T=100000, cool=0.98, step=1):
 	T *= cool
     return cost_old,resolve
 
+def genetic_optimize(domain, costf, resolve_size=50,muteprob=0.2,step=1,elite=0.2,maxiter=100):
+    def mutate(resolve):
+        i = random.randint(0, len(resolve) - 1)
+	if random.random() < 0.5 and resolve[i] > domain[i][0]:
+	    resolve[i] -= 1
+	elif resolve[i] < domain[i][1]:
+	    resolve[i] += 1
+	return resolve
+
+    def crossover(ra, rb):
+        i = random.randint(0, len(domain) - 1)
+	return ra[0:i] + rb[i:]
+
+    resolves = [[random.randint(domain[j][0], domain[j][1]) for j in range(len(domain))] for i in range(resolve_size)]
+    elite_size = int(elite * resolve_size)
+    for i in range(maxiter):
+        scores = [(costf(r), r) for r in resolves]
+	scores.sort()
+        ranked = [v for (s,v) in scores]
+        resolves = ranked[0:elite_size]
+	while len(resolves) < resolve_size:
+            if random.random() < muteprob:
+	        c = random.randint(0, elite_size)
+		resolves.append(mutate(ranked[c]))
+	    else:
+	        c1 = random.randint(0, elite_size)
+	        c2 = random.randint(0, elite_size)
+		resolves.append(crossover(ranked[c1], ranked[c2]))
+    return scores[0][0],scores[0][1]
+
