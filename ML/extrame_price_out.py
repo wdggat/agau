@@ -4,7 +4,7 @@ import sys
 sys.path.append('../etl/')
 from agau import Agau
 
-# last_closed, open_price, high in 21, low in 21, close_today
+# last_closed, open_price, high in 21, low in 21, 22:00, close_today
 def reducer(lines):
     high, low = 0, sys.maxint
     pre_day, day, out_str = None, None, None
@@ -25,7 +25,7 @@ def reducer(lines):
 	    if ag.price < low:
 	        low = ag.price
 	if ag.dt.hour == 22 and not out_str:
-	    out_str = '%s\t%s\t%s\t%s' % (ag.closed_price, ag.open_price, high, low)
+	    out_str = '%s\t%s\t%s\t%s\t%s' % (ag.closed_price, ag.open_price, high, low, ag.price)
 
 def reducer_delta(lines):
     high, low, closed_price = 0, sys.maxint, sys.maxint
@@ -47,9 +47,9 @@ def reducer_delta(lines):
 	    if ag.price < low:
 	        low = ag.price
 	if ag.dt.hour == 22 and not out_str:
-	    out_str = '%s\t%s\t%s' % (ag.open_price - ag.closed_price,  high - ag.closed_price, low - ag.closed_price)
+	    out_str = '%s\t%s\t%s\t%s' % (ag.open_price - ag.closed_price,  high - ag.closed_price, low - ag.closed_price, ag.price - ag.closed_price)
 	    closed_price = ag.closed_price
 
 if __name__ == '__main__':
-    reducer(sys.stdin)
+    reducer_delta(sys.stdin)
 

@@ -184,7 +184,7 @@
     ./ML/ag_history_price_predict.py =>　目前求得最好的结果的每日误差也在33
 
 31. 美元账户黄金和Ag(T+D)是否同涨同跌?
-    // TODO
+    不一定，这周就是黄金涨了，Ag跌了
 
 32. 用ag.history，求连续涨或连续跌的幅度. 用matplotlab画图画出来.
     // TODO
@@ -207,6 +207,9 @@
    => 无效, best_resolve: [17, -21, 0, 5, 55], best_ave_cost: 170184.057143
    => delta, best_resolve: [1, 1, -1, -14], best_ave_cost: 1530.900000
 
+   * last_closed,open_price,high in 21,low in 21, 22:00 
+   => 无效, best_cost: 12274721.0, best_resolve: [3, -16, -29, 22, 21, 622], best_ave_cost: 175353.157143 
+
    * last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.
    => 无效, best_cost: 69747958.0, best_resolve: [15, 80, -95, -49, 75, -64, 10, 50, -21, 31], best_ave_cost: 1010839.971014
 
@@ -219,7 +222,7 @@
 4. t, t + 5, t + 10, t + 15, t + 20 -> t + 60 (t=21:00)
     => failed, best_resolve: [0, 0, 0, 0, 2], best_ave_cost: 157.714286
 
-5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end  ==> next_night_bid
+5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end  ==> next_night_bid, 写好程序把这几个stage取子集排列组合求预测.
     // TODO
 
 * 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.

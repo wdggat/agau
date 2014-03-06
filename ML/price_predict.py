@@ -16,15 +16,15 @@ def reducer(lines, value_len):
         
     best_cost, ave_cost, best_resolve = sys.maxint, sys.maxint, None 
     while ave_cost > 1000:
-#        best_cost, best_resolve = optimizations.randomoptimize(domain, costf)
+        best_cost, best_resolve = optimizations.randomoptimize(domain, costf)
 #        best_cost, best_resolve = optimizations.hill_climb(domain, costf)
 #        best_cost, best_resolve = optimizations.annealing(domain, costf)
-        best_cost, best_resolve = optimizations.genetic_optimize(domain, costf)
+#        best_cost, best_resolve = optimizations.genetic_optimize(domain, costf)
         ave_cost = float(best_cost) / len(records)
         print 'best_cost: %s, best_resolve: %s, best_ave_cost: %f' % (best_cost, best_resolve, ave_cost)
 
 def get_expected(record, resolve):
-    return sum([record[i] * resolve[i] for i in range(len(resolve) - 1)]) + resolve[-1]
+    return sum([record[i] * resolve[i] for i in range(len(resolve) - 1)]) / 100 + resolve[-1]
 
 # record: v1,v2...vn,actual 
 # resolve: a1,a2..an,constant
