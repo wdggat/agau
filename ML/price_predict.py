@@ -17,7 +17,7 @@ def reducer(lines, value_len):
     best_denominator,best_ave_cost, best_resolve, LENGTH, best_SAME = 0, sys.maxint, None, 0, 0
     for denominator in [5 * (i+1) for i in range(40)]:
         j = 0
-        while j < 100:
+        while j < 1000:
 #            best_cost, best_resolve = optimizations.randomoptimize(domain, get_costf(records, denominator))
             cost, resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
 	    LENGTH, SAME = examine(records, resolve, reference, denominator, False)
@@ -62,9 +62,9 @@ def examine(records, resolve, reference, denominator=100, show=True):
 	expecteds.append(expected)
 	actuals.append(actual)
     LENGTH, SAME = len(references), float(sum([1 for i in range(len(references)) if (expecteds[i] - references[i]) * (actuals[i] - references[i]) > 0])) / len(references)
-    #print 'LENGTH: %s, same: %s' % (LENGTH, SAME)
+    print 'LENGTH: %s, same: %s' % (LENGTH, SAME)
     if show:
-        x = range(len(references))
+        x = range(len(deltaes))
         #pydrawer.draw(x, references, 'k', x, actuals, 'r-', x, expecteds, 'bo')
         pydrawer.draw(deltaes, 'bo')
     return LENGTH, SAME
