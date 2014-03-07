@@ -5,37 +5,43 @@ import sys
 import optimizations
 import pydrawer
 
-records = []
 def reducer(lines, value_len):
+    records = []
     domain = [(-100, 100)] * (value_len - 1) + [(-2000, 2000)]
     for line in lines:
         items = line.strip().split()
 	items = [float(item) for item in items]
 	if len(items) != value_len: continue
         records.append(items)
-        
-    best_cost, ave_cost, best_resolve = sys.maxint, sys.maxint, None 
-    while ave_cost > 1000:
-#        best_cost, best_resolve = optimizations.randomoptimize(domain, costf)
-        best_cost, best_resolve = optimizations.hill_climb(domain, costf)
-#        best_cost, best_resolve = optimizations.annealing(domain, costf)
-#        best_cost, best_resolve = optimizations.genetic_optimize(domain, costf)
-        ave_cost = float(best_cost) / len(records)
-	if ave_cost < 2000:
-            print 'best_cost: %s, best_resolve: %s, best_ave_cost: %f' % (best_cost, best_resolve, ave_cost)
+       
+    for denominator in [5 * (i+1) for i in range(40)]:
+        best_cost, ave_cost, best_resolve, j = sys.maxint, sys.maxint, None, 0
+        while ave_cost > 1000 and j < 1000:
+#            best_cost, best_resolve = optimizations.randomoptimize(domain, get_costf(records, denominator))
+            best_cost, best_resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
+#            best_cost, best_resolve = optimizations.annealing(domain, get_costf(records, denominator))
+#            best_cost, best_resolve = optimizations.genetic_optimize(domain, get_costf(records, denominator))
+            ave_cost = float(best_cost) / len(records)
+	    if ave_cost < 2000:
+                print 'best_cost: %s, best_resolve: %s, best_ave_cost: %f' % (best_cost, best_resolve, ave_cost)
+	    j += 1
+	print ' ---------------- denominator: %d, best_resolve: %s, best_ave_cost: %f --------------- ' % (denominator, best_resolve, ave_cost)
 
-def get_expected(record, resolve):
-    return sum([record[i] * resolve[i] for i in range(len(resolve) - 1)]) / 100 + resolve[-1]
+def get_expected(record, resolve, denominator=100):
+    return sum([record[i] * resolve[i] for i in range(len(resolve) - 1)]) / denominator + resolve[-1]
 
 # record: v1,v2...vn,actual 
 # resolve: a1,a2..an,constant
-def costf(resolve):
-    results = []
-    for record in records:
-        expected = get_expected(record, resolve)
-	actual = record[-1]
-        results.append((expected, actual))
-    return sum([pow(expected - actual, 2) for (expected, actual) in results])
+def get_costf(records, denominator):
+    def costf(resolve):
+        min_cost = sys.maxint
+        results = []
+        for record in records:
+            expected = get_expected(record, resolve, denominator)
+            actual = record[-1]
+            results.append((expected, actual))
+        return sum([pow(expected - actual, 2) for (expected, actual) in results])
+    return costf
 
 #reference: the index of the reference value for comparison
 def examine(lines, resolve, reference):
