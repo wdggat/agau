@@ -17,14 +17,14 @@ def reducer(lines, value_len):
     best_denominator,best_ave_cost, best_resolve, LENGTH, best_SAME = 0, sys.maxint, None, 0, 0
     for denominator in [5 * (i+1) for i in range(40)]:
         j = 0
-        while j < 1000:
+        while j < 100:
 #            best_cost, best_resolve = optimizations.randomoptimize(domain, get_costf(records, denominator))
             cost, resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
-	    LENGTH, SAME = examine(records, resolve, reference, False)
+	    LENGTH, SAME = examine(records, resolve, reference, denominator, False)
 #            best_cost, best_resolve = optimizations.annealing(domain, get_costf(records, denominator))
 #            best_cost, best_resolve = optimizations.genetic_optimize(domain, get_costf(records, denominator))
             ave_cost = float(cost) / len(records)
-	    if ave_cost < 2000 or SAME > 0.85:
+	    if ave_cost < 2000 or SAME > 0.85 or SAME < 0.15:
                 print 'best_resolve: %s, best_ave_cost: %f, LENGTH: %d, SAME: %f' % (resolve, ave_cost, LENGTH, SAME)
 	    if best_ave_cost > ave_cost:
 	        best_ave_cost = ave_cost
@@ -32,7 +32,7 @@ def reducer(lines, value_len):
 		best_denominator = denominator
 		best_SAME = SAME
 	    j += 1
-	print ' ---------------- denominator: %d, best_denominator: %d, best_resolve: %s, best_ave_cost: %f, LENGTH: %d, SAME: %f --------------- ' % (denominator, best_denominator, best_resolve, best_ave_cost, LENGTH, SAME)
+	print ' ---------------- denominator: %d, best_denominator: %d, best_resolve: %s, best_ave_cost: %f, LENGTH: %d, SAME: %f --------------- ' % (denominator, best_denominator, best_resolve, best_ave_cost, LENGTH, best_SAME)
 
 def get_expected(record, resolve, denominator=100):
     return sum([record[i] * resolve[i] for i in range(len(resolve) - 1)]) / denominator + resolve[-1]
@@ -51,10 +51,10 @@ def get_costf(records, denominator):
     return costf
 
 #reference: the index of the reference value for comparison
-def examine(records, resolve, reference, show=True):
+def examine(records, resolve, reference, denominator=100, show=True):
     deltaes, references, actuals, expecteds = [], [], [], []
     for record in records:
-        expected = get_expected(record, resolve)
+        expected = get_expected(record, resolve, denominator)
         actual = record[-1]
         deltaes.append(expected - actual)
 
