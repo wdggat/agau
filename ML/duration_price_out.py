@@ -31,7 +31,8 @@ def reducer(lines):
         elif utils.is_dt_nearby(ag.dt, dt_60.hour, dt_60.minute):
 	    price_60 = ag.price
 	    if price_0 and price_5 and price_10 and price_15 and price_20 and price_60:
-	        print '%s\t%s\t%s\t%s\t%s' % (price_5 - price_0, price_10 - price_5, price_15 - price_10, price_20 - price_15, price_60 - price_20)
+	        #print '%s\t%s\t%s\t%s\t%s' % (price_5 - price_0, price_10 - price_5, price_15 - price_10, price_20 - price_15, price_60 - price_20)
+	        print '%s\t%s\t%s\t%s\t%s\t%s' % (price_0, price_5, price_10, price_15, price_20, price_60)
 	    price_0, price_5, price_10, price_15, price_20, price_60 = None, None, None, None, None, None
 	else:
 	    continue

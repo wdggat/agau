@@ -8,20 +8,20 @@ from datetime import datetime
 from datetime import timedelta
 import utils
 
-# last_closed, open_price, 21:00, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00, closed_price
+# last_closed, open_price, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00, closed_price
 def get_dts1():
     td = timedelta(minutes=10)
     dt_begin = datetime(1970,1,1,21,0,0)
     return [dt_begin + td, dt_begin + td * 2, dt_begin + td * 3, dt_begin + td * 4, dt_begin + td * 5, dt_begin + td * 6]
 
-# last_closed, open_price, 21:00, 21:30, 22:00, 22:30, 23:00, closed_price
+# last_closed, open_price, 21:30, 22:00, 22:30, 23:00, closed_price
 def get_dts2():
     td = timedelta(minutes=30)
     dt_begin = datetime(1970,1,1,21,0,0)
     return [dt_begin + td, dt_begin + td * 2, dt_begin + td * 3, dt_begin + td * 4]
 
 def reducer(lines):
-    dts = get_dts1()
+    dts = get_dts2()
     prices = [None] * len(dts)
     pre_day, day, out_str = None, None, None
     for line in lines:
