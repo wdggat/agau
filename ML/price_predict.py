@@ -15,17 +15,20 @@ def reducer(lines, value_len):
         records.append(items)
        
     for denominator in [5 * (i+1) for i in range(40)]:
-        best_cost, ave_cost, best_resolve, j = sys.maxint, sys.maxint, None, 0
-        while ave_cost > 1000 and j < 1000:
+        best_ave_cost, best_resolve, j = sys.maxint, None, 0
+        while j < 100:
 #            best_cost, best_resolve = optimizations.randomoptimize(domain, get_costf(records, denominator))
-            best_cost, best_resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
+            cost, resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
 #            best_cost, best_resolve = optimizations.annealing(domain, get_costf(records, denominator))
 #            best_cost, best_resolve = optimizations.genetic_optimize(domain, get_costf(records, denominator))
-            ave_cost = float(best_cost) / len(records)
+            ave_cost = float(cost) / len(records)
 	    if ave_cost < 2000:
-                print 'best_cost: %s, best_resolve: %s, best_ave_cost: %f' % (best_cost, best_resolve, ave_cost)
+                print 'best_resolve: %s, best_ave_cost: %f' % (best_resolve, ave_cost)
+	    if best_ave_cost > ave_cost:
+	        best_ave_cost = ave_cost
+		best_resolve = resolve
 	    j += 1
-	print ' ---------------- denominator: %d, best_resolve: %s, best_ave_cost: %f --------------- ' % (denominator, best_resolve, ave_cost)
+	print ' ---------------- denominator: %d, best_resolve: %s, best_ave_cost: %f --------------- ' % (denominator, best_resolve, best_ave_cost)
 
 def get_expected(record, resolve, denominator=100):
     return sum([record[i] * resolve[i] for i in range(len(resolve) - 1)]) / denominator + resolve[-1]
@@ -76,7 +79,8 @@ def examine_delta(lines, resolve):
 def print_usage():
     print 'Usage:'
     print '\tpython price_predict.py <LENGTH>'
-    print '\tpython price_predict.py examine <resolve>'
+    print '\tpython price_predict.py examine <resolve> reference_index'
+    print '\tpython price_predict.py examine_delta <resolve>'
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
