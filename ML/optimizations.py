@@ -7,7 +7,7 @@ import math
 def randomoptimize(domain, costf):
     best = sys.maxint
     best_resolve = None
-    for i in range(1000000):
+    for i in range(100000):
         resolve = [random.randint(domain[j][0], domain[j][1]) for j in range(len(domain))]
 	cost = costf(resolve)
 

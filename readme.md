@@ -205,6 +205,7 @@
 
    * last_closed,open_price,high in 21,low in 21
    => best_resolve: [-72, 42, 100, 23, 277], best_ave_cost: 1388.089300  --> LENGTH: 72, same: 0.597222222222
+   => denominator: 120, best_resolve: [-84, 71, 100, 26, 231], best_ave_cost: 1367.262286
    => delta, best_resolve: [54, 86, 29, -9], best_ave_cost: 1436.544481  --> same: 0.666666666667
 
    * last_closed,open_price,high in 21,low in 21, 22:00 
@@ -227,6 +228,9 @@
     // TODO
 
 6. 写一个控制程序，自动调节domain中的(-100,100)和costf中的/100和具体的回归方法，分别运算比较出最优值
+    // TODO
+
+7. 在price_predict.py中，求最优解时，也把SAME的概率最优的也算出来吧，即使求不到线性的公式，求出涨跌方向也是不错的.
     // TODO
 
 * 写好任务每日定时自动运行, 满足条件自动发信息通知, 每周6公式重新运算更新.
