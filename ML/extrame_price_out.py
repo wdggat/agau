@@ -25,8 +25,8 @@ def reducer(lines):
 	    if ag.price < low:
 	        low = ag.price
 	if ag.dt.hour == 22 and not out_str:
-	    #out_str = '%s\t%s\t%s\t%s\t%s' % (ag.closed_price, ag.open_price, high, low, ag.price)
-	    out_str = '%s\t%s\t%s\t%s' % (ag.closed_price, ag.open_price, high, low)
+	    out_str = '%s\t%s\t%s\t%s\t%s' % (ag.closed_price, ag.open_price, high, low, ag.price)
+	    #out_str = '%s\t%s\t%s\t%s' % (ag.closed_price, ag.open_price, high, low)
 
 def reducer_delta(lines):
     high, low, closed_price = 0, sys.maxint, sys.maxint
@@ -53,5 +53,5 @@ def reducer_delta(lines):
 	    closed_price = ag.closed_price
 
 if __name__ == '__main__':
-    reducer_delta(sys.stdin)
+    reducer(sys.stdin)
 

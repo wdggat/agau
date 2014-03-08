@@ -115,21 +115,21 @@
 20. 3个竞价时间和3个交易时段，任意排列组合求变化方向
     cat stage_alters.ag | python stage_direction_relations.py
   =>
-    (NIGHT$-^, --AM^): (32, 4, 28)
-    (--NIGHT^, NIGHT$-^): (27, 0, 37)
-    (--AM^, PM^-$): (26, 3, 35)
-    (NIGHT$-^, AM^-$): (30, 0, 34)
-    (--PM^, PM^-$): (32, 4, 30)
-    (NIGHT$-^, --PM^): (25, 15, 24)
-    (--AM^, --PM^): (27, 15, 22)
-    (NIGHT$-^, PM^-$): (33, 4, 28)
-    (--AM^, AM^-$): (32, 0, 32)
-    (--NIGHT^, --PM^): (23, 15, 26)
-    (--NIGHT^, PM^-$): (34, 3, 27)
-    (--NIGHT^, AM^-$): (35, 0, 29)
-    (AM^-$, --PM^): (19, 15, 32)
-    (--NIGHT^, --AM^): (27, 4, 33)
-    (AM^-$, PM^-$): (34, 4, 28)
+    (NIGHT$-^, --AM^): (35, 5, 30)
+    (--NIGHT^, NIGHT$-^): (29, 0, 41)
+    (--AM^, PM^-$): (28, 4, 38)
+    (NIGHT$-^, AM^-$): (34, 0, 36)
+    (--PM^, PM^-$): (35, 5, 32)
+    (NIGHT$-^, --PM^): (27, 16, 27)
+    (--AM^, --PM^): (27, 16, 27)
+    (NIGHT$-^, PM^-$): (37, 5, 29)
+    (--AM^, AM^-$): (35, 0, 35)
+    (--NIGHT^, --PM^): (26, 16, 28)
+    (--NIGHT^, PM^-$): (35, 4, 31)
+    (--NIGHT^, AM^-$): (37, 0, 33)
+    (AM^-$, --PM^): (21, 16, 35)
+    (--NIGHT^, --AM^): (29, 5, 36)
+    (AM^-$, PM^-$): (36, 5, 31)
 
 21. 分析竞价方向与晚市变动方向在哪个区间内75%相同，或哪个区间内75%不同.
     liu@hzliuxiaolong-hp:~/workspace/agau/etl$ cat stage_alters.ag | python stage_threshold_odds.py day
@@ -210,6 +210,7 @@
 
    * last_closed,open_price,high in 21,low in 21, 22:00 
    => best_resolve: [-78, 64, 76, -26, 59, 191], best_ave_cost: 1393.525493  -->  LENGTH: 72, same: 0.583333333333
+    best_denominator: 95, best_resolve: [-64, 80, 24, -18, 67, 252], best_ave_cost: 1363.595499, LENGTH: 72, SAME: 0.597222
    => delta, best_resolve: [70, 39, -1, 61, -8], best_ave_cost: 1414.773519  -->  SAME: 0.680555555556
 
    * last_closed, open_price, 21:10, 21:20, 21:30, 21:40, 21:50, 22:00,如有效，写好任务每日22:03分自动运行, 每周6公式重新运算更新.

@@ -17,7 +17,7 @@ def reducer(lines, value_len):
     best_denominator,best_ave_cost, best_resolve, LENGTH, best_SAME = 0, sys.maxint, None, 0, 0
     for denominator in [5 * (i+1) for i in range(40)]:
         j = 0
-        while j < 100:
+        while j < 1000:
 #            best_cost, best_resolve = optimizations.randomoptimize(domain, get_costf(records, denominator))
             cost, resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
 	    LENGTH, SAME = examine(records, resolve, reference, denominator, False)
