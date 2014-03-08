@@ -62,9 +62,9 @@ def examine(records, resolve, reference, denominator=100, show=True):
 	expecteds.append(expected)
 	actuals.append(actual)
     LENGTH, SAME = len(references), float(sum([1 for i in range(len(references)) if (expecteds[i] - references[i]) * (actuals[i] - references[i]) > 0])) / len(references)
-    #print 'LENGTH: %s, same: %s' % (LENGTH, SAME)
+    print 'LENGTH: %s, same: %s' % (LENGTH, SAME)
     if show:
-        x = range(len(references))
+        x = range(len(deltaes))
         #pydrawer.draw(x, references, 'k', x, actuals, 'r-', x, expecteds, 'bo')
         pydrawer.draw(deltaes, 'bo')
     return LENGTH, SAME

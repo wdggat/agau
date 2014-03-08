@@ -18,7 +18,7 @@ if __name__ == '__main__':
     c = [15,25,35,45,55]
     d = [18,28,38,48,58]
     #draw(a, b)
-    ndraw(a, b, 'r-', a, c, 'bo', a, d, 'g-')
+    draw(a, b, 'r-', a, c, 'bo', a, d, 'g-')
     #plt.grid(True)
     #plt.plot(a, b, 'r-', a, c, 'bo', a, d, 'g-')
     #plt.show()
