@@ -65,17 +65,17 @@ def examine(records, resolve, reference, denominator=100, show=True):
     print 'LENGTH: %s, same: %s' % (LENGTH, SAME)
     if show:
         x = range(len(deltaes))
-        #pydrawer.draw(x, references, 'k', x, actuals, 'r-', x, expecteds, 'bo')
-        pydrawer.draw(deltaes, 'bo')
+        pydrawer.draw(x, references, 'k', x, actuals, 'r-', x, expecteds, 'bo')
+        #pydrawer.draw(deltaes, 'bo')
     return LENGTH, SAME
 
-def examine_reducer(lines, resolve, reference):
+def examine_reducer(lines, resolve, reference, denominator=100):
     records = []
     for line in lines:
         items = line.strip().split()
         record = [float(item) for item in items]
 	records.append(record)
-    examine(records, eval(resolve), reference)
+    examine(records, eval(resolve), reference, denominator)
 
 # delta seems to be useless
 def examine_delta(lines, resolve):
@@ -93,14 +93,14 @@ def examine_delta(lines, resolve):
 def print_usage():
     print 'Usage:'
     print '\tpython price_predict.py <LENGTH>'
-    print '\tpython price_predict.py examine <resolve> reference_index'
+    print '\tpython price_predict.py examine <resolve> reference_index denominator'
     print '\tpython price_predict.py examine_delta <resolve>'
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         reducer(sys.stdin, int(sys.argv[1]))
-    elif len(sys.argv) == 4 and sys.argv[1] == 'examine':
-        examine_reducer(sys.stdin, sys.argv[2], int(sys.argv[3]))
+    elif len(sys.argv) == 5 and sys.argv[1] == 'examine':
+        examine_reducer(sys.stdin, sys.argv[2], int(sys.argv[3]), int(sys.argv[4]))
     elif len(sys.argv) == 3 and sys.argv[1] == 'examine_delta':
         examine_delta(sys.stdin, sys.argv[2])
     else:
