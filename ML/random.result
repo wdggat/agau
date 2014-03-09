@@ -30,3 +30,11 @@ i: 3, cost: 285413.1699, resolve: [-36, -5, 97, 44, -24], ave_cost: 1089.363244
 i: 18, cost: 286437.9052, resolve: [-38, 8, 88, 42, -17], ave_cost: 1093.274447
 i: 24, cost: 284008.597, resolve: [-23, 1, 82, 40, -19], ave_cost: 1084.002279
 i: 116, cost: 283913.8859, resolve: [-40, 4, 93, 43, -25], ave_cost: 1083.640786
+
+Execute --> cat stage_predicts.temp | cut -f3,4 > stage_temp.cut
+ ---------------- denominator: 20, best_denominator: 20, best_resolve: [15, -5], best_ave_cost: 286.994167, LENGTH: 75, SAME: 0.666667 --------------- 
+  ---------------- denominator: 40, best_denominator: 40, best_resolve: [31, -5], best_ave_cost: 286.941675, LENGTH: 75, SAME: 0.666667 --------------- 
+   ---------------- denominator: 60, best_denominator: 60, best_resolve: [46, -5], best_ave_cost: 286.936430, LENGTH: 75, SAME: 0.666667 --------------- 
+    ---------------- denominator: 80, best_denominator: 60, best_resolve: [46, -5], best_ave_cost: 286.936430, LENGTH: 75, SAME: 0.666667 --------------- 
+     ---------------- denominator: 100, best_denominator: 100, best_resolve: [77, -5], best_ave_cost: 286.935799, LENGTH: 75, SAME: 0.666667 --------------- 
+Title: ['NIGHT$-^', 'AM^-$'], Solution: denominator: 120, resolve: [1, -6], ave_cost: 382.798216, LENGTH: 75, SAME: 0.680000

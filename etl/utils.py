@@ -326,3 +326,16 @@ def is_dt_nearby(dt, hour, minute):
         return True
     return False
 
+def subsets(s):
+    flags, all_subsets = [0] * len(s), []
+    def subset(s, begin, end):
+        if begin > end:
+	    all_subsets.append([s[i] for i in range(len(flags)) if flags[i] == 1])
+	    return;
+	flags[begin] = 0
+	subset(s, begin + 1, end)
+	flags[begin] = 1
+	subset(s, begin + 1, end)
+    subset(s, 0, len(s) - 1)
+    return all_subsets
+
