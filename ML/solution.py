@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+import sys
+
 class Solution():
     def __init__(self, denominator, resolve, ave_cost, LENGTH, SAME):
         self.denominator = denominator
@@ -12,6 +14,6 @@ class Solution():
 	return 'denominator: %d, resolve: %s, ave_cost: %f, LENGTH: %d, SAME: %f' % (self.denominator, self.resolve, self.ave_cost, self.LENGTH, self.SAME)
 
     @classmethod
-    def EMPTY():
-        return Solution(0, None, 0, 0, 0)
+    def EMPTY(self):
+        return Solution(0, None, sys.maxint, 0, 0)
 	

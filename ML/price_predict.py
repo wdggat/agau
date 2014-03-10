@@ -6,6 +6,7 @@ import optimizations
 import pydrawer
 from solution import Solution
 from adjuster import Adjuster
+import adjuster
 
 def reducer(lines, adjuster):
     records = []
@@ -20,7 +21,7 @@ def reducer(lines, adjuster):
         j = 0
         while j < 100:
 #            best_cost, best_resolve = optimizations.randomoptimize(domain, get_costf(records, denominator))
-            cost, resolve = optimizations.hill_climb(domain, get_costf(records, denominator))
+            cost, resolve = optimizations.hill_climb(adjuster.domain, get_costf(records, denominator))
 	    LENGTH, SAME = examine(records, resolve, adjuster.reference, denominator, False)
 #            best_cost, best_resolve = optimizations.annealing(domain, get_costf(records, denominator))
 #            best_cost, best_resolve = optimizations.genetic_optimize(domain, get_costf(records, denominator))

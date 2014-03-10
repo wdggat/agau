@@ -4,6 +4,7 @@ import sys
 sys.path.append('../etl/')
 import utils
 import price_predict
+import adjuster
 
 #--NIGHT^	NIGHT$-^	--AM^	AM^-$	--PM^	PM^-$
 def reducer(lines, stage_predicts_tempf):
@@ -15,7 +16,7 @@ def reducer(lines, stage_predicts_tempf):
         if len(subset) < 2 or subset[-1] == 4: continue
 	command = 'cat %s | cut -f%s > stage_temp.cut' % (stage_predicts_tempf, ','.join([str(i + 1) for i in subset]))
 	utils.execute(command)
-	solution = price_predict.reducer(open('stage_temp.cut'), len(subset))
+	solution = price_predict.reducer(open('stage_temp.cut'), adjuster.get_adjuster('STAGE_%d' % len(subset)))
 	print 'Title: %s, Solution: %s' % ([titles[i] for i in subset], solution)
 
 def print_usage():

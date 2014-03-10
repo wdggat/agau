@@ -38,3 +38,4 @@ Execute --> cat stage_predicts.temp | cut -f3,4 > stage_temp.cut
     ---------------- denominator: 80, best_denominator: 60, best_resolve: [46, -5], best_ave_cost: 286.936430, LENGTH: 75, SAME: 0.666667 --------------- 
      ---------------- denominator: 100, best_denominator: 100, best_resolve: [77, -5], best_ave_cost: 286.935799, LENGTH: 75, SAME: 0.666667 --------------- 
 Title: ['NIGHT$-^', 'AM^-$'], Solution: denominator: 120, resolve: [1, -6], ave_cost: 382.798216, LENGTH: 75, SAME: 0.680000
+Title: ['NIGHT$-^', '--AM^'], Solution: denominator: 180, resolve: [-4, -1], ave_cost: 162.661090, LENGTH: 75, SAME: 0.520000
