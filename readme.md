@@ -226,7 +226,8 @@
     => best_resolve: [53, -97, 14, 27, 99, 166], best_ave_cost: 152.307661  -->  LENGTH: 72, same: 0.666666666667
 
 5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end -> next_night_bid, 写好程序把这几个stage取子集排列组合求预测.
-    // TODO
+    Done.
+    * ^--am& 负数概率 55/79
 
 6. 写一个控制程序，自动调节domain中的(-100,100)和costf中的/100和具体的回归方法，分别运算比较出最优值
     // TODO, 已写好costf中denominator的自动调节
