@@ -187,7 +187,7 @@
     不一定，这周就是黄金涨了，Ag跌了
 
 32. 用ag.history，求连续涨或连续跌的幅度. 用matplotlab画图画出来.
-    // TODO
+    Done 基本都在200之间
 
 33.观察下每周５的晚市与早市间是否有关系.
     // TODO
@@ -197,9 +197,9 @@
 
 ## ML ##
 1. 把paper.dat, agau.dat的同一时刻的记录对应起来,求出Ag(T+D)的公式
-    // TODO
+    NO need to. au is not synchronized to ag.
 
-2. how to predict the closed_price of Ag and the odds that predicted the same direction(>0.8).  //TODO
+2. how to predict the closed_price of Ag and the odds that predicted the same direction(>0.8).  //Failed
    * last_closed,open_price,high,low
    => 求出预测的涨跌方向　direction_same: 218, length: 262, direction_same/length: 0.832061068702，需用2013-11-30至今的数据检测下
 
@@ -222,14 +222,15 @@
 3. 把2中求得的公式，用matplotlab把每日误差图形化出来
     Done.
 
-4. t, t + 5, t + 10, t + 15, t + 20 -> t + 60 (t=21:00)
-    => best_resolve: [53, -97, 14, 27, 99, 166], best_ave_cost: 152.307661  -->  LENGTH: 72, same: 0.666666666667
+4. t, t + 5, t + 10, t + 15, t + 20 -> t + 60 (t=21:00) // useless, too small
+    => {denominator: 180, resolve: [47, -99, 100, 32, 100, 1], ave_cost: 148.674505, LENGTH: 72, SAME: 0.694444}
 
 5. night_begin -> night_end -> am_begin -> am_end -> pm_begin -> pm_end -> next_night_bid, 写好程序把这几个stage取子集排列组合求预测.
-    // TODO
+    Done.
+    * ^--am& 负数概率 55/79
 
 6. 写一个控制程序，自动调节domain中的(-100,100)和costf中的/100和具体的回归方法，分别运算比较出最优值
-    // TODO, 已写好costf中denominator的自动调节
+    => 已写好costf中denominator的自动调节,没啥效果
 
 7. 在price_predict.py中，求最优解时，也把SAME的概率最优的也算出来吧，即使求不到线性的公式，求出涨跌方向也是不错的.
     Done. 严重影响效率.

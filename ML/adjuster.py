@@ -17,6 +17,7 @@ adjusters = {
   'STAGE_6' : Adjuster(-1, 6, [(-100, 100)] * 5 + [(-2000, 2000)], [20 * (i+1) for i in range(10)], 100),
   'EXAMINE_NO22' : Adjuster(1, 5, [(-100, 100)] * 4 + [(-2000, 2000)], [5 * (i+1) for i in range(40)], 1000),
   'EXAMINE_WITH22' : Adjuster(1, 6, [(-100, 100)] * 5 + [(-2000, 2000)], [5 * (i+1) for i in range(40)], 1000),
+  'DURATION' : Adjuster(1, 6, [(-100, 100)] * 5 + [(-2000, 2000)], [5 * (i+1) for i in range(40)], 1000),
 }
 
 def get_adjuster(name):

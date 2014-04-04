@@ -43,7 +43,6 @@ def get_expected(record, resolve, denominator=100):
 # resolve: a1,a2..an,constant
 def get_costf(records, denominator):
     def costf(resolve):
-        min_cost = sys.maxint
         results = []
         for record in records:
             expected = get_expected(record, resolve, denominator)
