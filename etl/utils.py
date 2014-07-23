@@ -167,8 +167,8 @@ def get_datetime(time_str, df = '%Y-%m-%d %H:%M:%S'):
 def is_before(datestr, baseday=today()):
     return re.sub('-','',datestr) <= re.sub('-', '', baseday)
 
-def yesterday(dt = datetime.now(), df = '%Y-%m-%d'):
-    return str((dt - timedelta(days=1)).strftime(df))
+def yesterday(dt = datetime.now(), df = '%Y-%m-%d', delta=1):
+    return str((dt - timedelta(days=delta)).strftime(df))
 
 def before_datestr(datestr, delta, df='%Y-%m-%d'):
     d = datetime.strptime(datestr, df)
@@ -266,7 +266,10 @@ def now():
 
 def get_agau_day(dt):
     if(dt.hour < 20):
-        return yesterday(dt)
+        if dt.weekday() != 0:
+            return yesterday(dt)
+	else:
+	    return yesterday(dt, delta=3)
     return dt.strftime('%Y-%m-%d')
 
 def get_paper_day(dt):

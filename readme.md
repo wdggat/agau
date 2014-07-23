@@ -253,8 +253,9 @@
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 18  =>  33/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 15  =>  37/64
     grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 13  =>  43/64
-    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  50/64
-    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  52/64   ---Y
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py 10  =>  125/172 = 0.726744
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  8  =>  137/172 = 0.796512
+    grep -e "Ag" ../agau.dat | python deal_opposite_bid.py  5  =>  146/172 = 0.848837
 
 3. 5长 x价，若跌50，10(x - 50), 若再跌50，10(x-100)
 
