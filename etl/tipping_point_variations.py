@@ -1,9 +1,11 @@
 #!/usr/bin/env python
+#!-*- coding: utf8 -*-
 
 import sys
 import utils
 from agau import Agau
 
+#21:29 -> 21:34间变动多大
 def reducer(lines):
     begins, extremums = {},{}
     print 'DAY\t\tDELTA'
@@ -11,7 +13,7 @@ def reducer(lines):
         agtd = Agau.get_from_agauline(line)
 	if agtd.dt.hour == 21 and agtd.dt.minute in (28,29,30,31,32,33,34):
 	    day = agtd.day
-	    if begins.get(day) == None and agtd.dt.minute in (28, 29):
+	    if begins.get(day) == None :
 	        begins[day] = agtd.price 
 	    if abs(extremums.get(day, begins[day]) - begins[day]) <= abs(agtd.price - begins[day]):
 	        extremums[day] = agtd.price 
